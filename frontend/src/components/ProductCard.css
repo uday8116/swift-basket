@@ -1,0 +1,142 @@
+.product-card {
+    position: relative;
+    width: 100%;
+    transition: all 0.2s;
+    background: white;
+    padding-bottom: 10px;
+    cursor: pointer;
+}
+
+.product-card:hover {
+    box-shadow: 0 2px 16px 4px rgba(40, 44, 63, 0.07);
+}
+
+.product-image-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 0.8;
+    overflow: hidden;
+    background: #f4f4f5;
+}
+
+.product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.2s;
+}
+
+.rating-container {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 4px 8px;
+    border-radius: 2px;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.product-card:hover .rating-container {
+    opacity: 1;
+}
+
+.product-details {
+    padding: 10px 10px 0;
+}
+
+.brand-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: #282c3f;
+    margin-bottom: 4px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.product-name {
+    font-size: 14px;
+    color: #535766;
+    font-weight: 400;
+    margin-bottom: 8px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    font-size: 14px;
+}
+
+.price {
+    font-weight: 700;
+    color: #282c3f;
+}
+
+.original-price {
+    text-decoration: line-through;
+    color: #7e818c;
+    font-size: 12px;
+}
+
+.discount {
+    color: #ff905a;
+    font-weight: 700;
+    font-size: 12px;
+}
+
+.wishlist-action {
+    position: absolute;
+    bottom: 0;
+    /* Or manipulate layout to appear below */
+    left: 0;
+    width: 100%;
+    border-top: 1px solid #eaeaec;
+    height: 40px;
+    display: none;
+    /* Show/Hide logic */
+    display: flex;
+    /* For now visible but let's hide it */
+    opacity: 0;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    transition: opacity 0.2s;
+}
+
+.product-card:hover .wishlist-action {
+    opacity: 1;
+}
+
+.wishlist-btn {
+    width: 90%;
+    margin: 0 auto;
+    border: 1px solid #d4d5d9;
+    border-radius: 4px;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #282c3f;
+    text-transform: uppercase;
+}
+
+.wishlist-btn:hover {
+    border-color: #282c3f;
+}
+.wishlist-btn.active {
+    background-color: #ff3f6c;
+    color: white;
+}

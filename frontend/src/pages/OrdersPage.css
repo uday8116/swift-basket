@@ -1,0 +1,131 @@
+.orders-page {
+    padding-top: 2rem;
+    padding-bottom: 4rem;
+    min-height: 80vh;
+}
+
+.orders-page h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 2rem;
+    color: #1a1a1e;
+}
+
+.orders-table-container {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    border: 1px solid #eaeaec;
+}
+
+.orders-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.orders-table th {
+    background: #f9f9fb;
+    padding: 1rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid #eaeaec;
+}
+
+.orders-table td {
+    padding: 1.25rem 1rem;
+    border-bottom: 1px solid #f1f1f4;
+    font-size: 0.95rem;
+    color: #1a1a1e;
+}
+
+.orders-table tr:last-child td {
+    border-bottom: none;
+}
+
+.status-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.status-paid {
+    background: #e6fcf5;
+    color: #0ca678;
+}
+
+.status-not-paid {
+    background: #fff5f5;
+    color: #fa5252;
+}
+
+.status-delivered {
+    background: #e7f5ff;
+    color: #228be6;
+}
+
+.status-not-delivered {
+    background: #fff9db;
+    color: #f08c00;
+}
+
+.btn-details {
+    background: #fff;
+    border: 1px solid #eaeaec;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-details:hover {
+    background: #f8f9fa;
+    border-color: #ced4da;
+}
+
+.no-orders {
+    text-align: center;
+    padding: 4rem 2rem;
+}
+
+.no-orders p {
+    color: #6c757d;
+    margin-bottom: 1.5rem;
+}
+
+@media (max-width: 768px) {
+    .orders-table thead {
+        display: none;
+    }
+
+    .orders-table td {
+        display: block;
+        padding: 0.5rem 1rem;
+        border: none;
+    }
+
+    .orders-table td:first-child {
+        padding-top: 1.5rem;
+        font-weight: bold;
+    }
+
+    .orders-table td:last-child {
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid #f1f1f4;
+    }
+
+    .orders-table td::before {
+        content: attr(data-label);
+        float: left;
+        font-weight: 600;
+        color: #6c757d;
+        margin-right: 1rem;
+    }
+}

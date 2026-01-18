@@ -1,0 +1,128 @@
+.order-details-page {
+    padding-top: 2rem;
+    padding-bottom: 4rem;
+}
+
+.order-details-page h1 {
+    font-size: 1.75rem;
+    font-weight: 800;
+    margin-bottom: 2rem;
+}
+
+.order-grid {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 2rem;
+}
+
+.order-card {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid #eaeaec;
+    margin-bottom: 2rem;
+}
+
+.order-card h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #1a1a1e;
+}
+
+.order-card p {
+    margin-bottom: 0.5rem;
+    color: #4a4a4e;
+}
+
+.status-alert {
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.status-alert.success {
+    background: #e6fcf5;
+    color: #0ca678;
+}
+
+.status-alert.warning {
+    background: #fff5f5;
+    color: #fa5252;
+}
+
+.order-items {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.order-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #f1f1f4;
+}
+
+.order-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.order-item img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.item-details a {
+    font-weight: 600;
+    color: #1a1a1e;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.item-details a:hover {
+    text-decoration: underline;
+}
+
+.order-summary-card {
+    background: #f9f9fb;
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px solid #eaeaec;
+    position: sticky;
+    top: 100px;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+    color: #4a4a4e;
+}
+
+.summary-row.total {
+    border-top: 1px solid #eaeaec;
+    padding-top: 1rem;
+    margin-top: 1rem;
+    font-weight: 800;
+    font-size: 1.25rem;
+    color: #1a1a1e;
+}
+
+@media (max-width: 992px) {
+    .order-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .order-summary-card {
+        position: static;
+    }
+}

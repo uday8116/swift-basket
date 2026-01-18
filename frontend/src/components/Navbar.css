@@ -1,0 +1,111 @@
+.navbar {
+    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 1000;
+    height: 80px;
+    display: flex;
+    align-items: center;
+}
+
+.nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.logo-text {
+    font-weight: 900;
+    font-size: 20px;
+    letter-spacing: 1px;
+    color: var(--text-main);
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+    margin-left: 40px;
+}
+
+.nav-links a {
+    font-weight: 700;
+    font-size: 14px;
+    color: #282c3f;
+    text-transform: uppercase;
+    letter-spacing: .3px;
+    border-bottom: 3px solid transparent;
+    padding-bottom: 28px;
+    padding-top: 30px;
+    /* To center text vertically roughly */
+}
+
+.nav-links a:hover {
+    border-bottom-color: var(--primary);
+}
+
+.search-bar {
+    flex: 1;
+    max-width: 400px;
+    background: #f5f5f6;
+    border-radius: 4px;
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    margin: 0 40px;
+}
+
+.search-icon {
+    color: #696e79;
+    margin-right: 10px;
+}
+
+.search-bar input {
+    border: none;
+    background: transparent;
+    width: 100%;
+    outline: none;
+    color: #696e79;
+}
+
+.nav-icons {
+    display: flex;
+    gap: 25px;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 12px;
+    font-weight: 600;
+    color: #282c3f;
+    cursor: pointer;
+}
+
+.nav-item svg {
+    font-size: 18px;
+    margin-bottom: 4px;
+}
+.cart-icon-container {
+    position: relative;
+    color: #282c3f;
+    text-decoration: none;
+}
+
+.cart-badge {
+    position: absolute;
+    top: -5px;
+    right: 0px;
+    background-color: #ff3f6c;
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
