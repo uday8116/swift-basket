@@ -17,6 +17,7 @@ import OrdersPage from './pages/OrdersPage';
 import OrderDetailsPage from './pages/OrderDetailsPage';
 import AdminOrdersPage from './pages/AdminOrdersPage';
 import AdminUsersPage from './pages/AdminUsersPage';
+import AdminHomeContentPage from './pages/AdminHomeContentPage';
 import InformationPage from './pages/InformationPage';
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
@@ -51,6 +52,7 @@ function App() {
                   <Route path="/order/:id" element={<OrderDetailsPage />} />
                   <Route path="/admin/orders" element={<AdminOrdersPage />} />
                   <Route path="/admin/users" element={<AdminUsersPage />} />
+                  <Route path="/admin/home-content" element={<AdminHomeContentPage />} />
                   <Route path="/info/:type" element={<InformationPage />} />
                 </Routes>
               </main>

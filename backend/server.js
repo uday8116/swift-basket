@@ -59,6 +59,7 @@ app.use('/api/users', require('./routes/userRoutes'));
 app.use('/api/products', require('./routes/productRoutes'));
 app.use('/api/orders', require('./routes/orderRoutes'));
 app.use('/api/payment', require('./routes/paymentRoutes'));
+app.use('/api/home-content', require('./routes/homeContentRoutes'));
 
 app.get('/', (req, res) => {
     res.send('API is running...');

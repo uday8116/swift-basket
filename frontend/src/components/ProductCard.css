@@ -1,14 +1,79 @@
 .product-card {
     position: relative;
     width: 100%;
-    transition: all 0.2s;
     background: white;
     padding-bottom: 10px;
     cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0;
+    animation: productCardEntrance 0.5s ease-out forwards;
+    transform-style: preserve-3d;
+}
+
+/* Stagger animation for product cards */
+.product-card:nth-child(1) {
+    animation-delay: 0.05s;
+}
+
+.product-card:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.product-card:nth-child(3) {
+    animation-delay: 0.15s;
+}
+
+.product-card:nth-child(4) {
+    animation-delay: 0.2s;
+}
+
+.product-card:nth-child(5) {
+    animation-delay: 0.25s;
+}
+
+.product-card:nth-child(6) {
+    animation-delay: 0.3s;
+}
+
+.product-card:nth-child(7) {
+    animation-delay: 0.35s;
+}
+
+.product-card:nth-child(8) {
+    animation-delay: 0.4s;
+}
+
+.product-card:nth-child(9) {
+    animation-delay: 0.45s;
+}
+
+.product-card:nth-child(10) {
+    animation-delay: 0.5s;
+}
+
+.product-card:nth-child(11) {
+    animation-delay: 0.55s;
+}
+
+.product-card:nth-child(12) {
+    animation-delay: 0.6s;
+}
+
+@keyframes productCardEntrance {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
 .product-card:hover {
-    box-shadow: 0 2px 16px 4px rgba(40, 44, 63, 0.07);
+    box-shadow: 0 8px 30px rgba(40, 44, 63, 0.12);
+    transform: translateY(-5px);
 }
 
 .product-image-container {
@@ -23,27 +88,77 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.2s;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.product-card:hover .product-image {
+    transform: scale(1.08);
+}
+
+/* Shimmer overlay on hover */
+.product-image-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, 0.3),
+            transparent);
+    transition: left 0.6s ease;
+}
+
+.product-card:hover .product-image-container::after {
+    left: 100%;
 }
 
 .rating-container {
     position: absolute;
     bottom: 10px;
     left: 10px;
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(4px);
     padding: 4px 8px;
-    border-radius: 2px;
+    border-radius: 4px;
     font-size: 12px;
     font-weight: 700;
     display: flex;
     align-items: center;
     gap: 4px;
     opacity: 0;
-    transition: opacity 0.2s;
+    transform: translateY(10px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .product-card:hover .rating-container {
     opacity: 1;
+    transform: translateY(0);
+}
+
+.star {
+    color: #14958f;
+    animation: none;
+}
+
+.product-card:hover .star {
+    animation: starPulse 0.4s ease-out;
+}
+
+@keyframes starPulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.3);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }
 
 .product-details {
@@ -58,6 +173,11 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    transition: color 0.3s ease;
+}
+
+.product-card:hover .brand-name {
+    color: #ff3f6c;
 }
 
 .product-name {
@@ -80,6 +200,11 @@
 .price {
     font-weight: 700;
     color: #282c3f;
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover .price {
+    transform: scale(1.05);
 }
 
 .original-price {
@@ -92,29 +217,45 @@
     color: #ff905a;
     font-weight: 700;
     font-size: 12px;
+    position: relative;
+}
+
+.product-card:hover .discount {
+    animation: discountPulse 0.5s ease-out;
+}
+
+@keyframes discountPulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+        color: #ff3f6c;
+    }
 }
 
 .wishlist-action {
     position: absolute;
     bottom: 0;
-    /* Or manipulate layout to appear below */
     left: 0;
     width: 100%;
     border-top: 1px solid #eaeaec;
     height: 40px;
-    display: none;
-    /* Show/Hide logic */
     display: flex;
-    /* For now visible but let's hide it */
     opacity: 0;
+    transform: translateY(10px);
     align-items: center;
     justify-content: center;
     background: white;
-    transition: opacity 0.2s;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .product-card:hover .wishlist-action {
     opacity: 1;
+    transform: translateY(0);
 }
 
 .wishlist-btn {
@@ -131,12 +272,77 @@
     font-weight: 700;
     color: #282c3f;
     text-transform: uppercase;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.wishlist-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 63, 108, 0.1);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.4s ease;
+}
+
+.wishlist-btn:hover::before {
+    width: 300px;
+    height: 300px;
 }
 
 .wishlist-btn:hover {
-    border-color: #282c3f;
+    border-color: #ff3f6c;
+    color: #ff3f6c;
 }
+
+.wishlist-btn svg {
+    transition: transform 0.3s ease;
+}
+
+.wishlist-btn:hover svg {
+    transform: scale(1.2);
+}
+
 .wishlist-btn.active {
-    background-color: #ff3f6c;
+    background: linear-gradient(135deg, #ff3f6c 0%, #ff6b8a 100%);
     color: white;
+    border-color: transparent;
+}
+
+.wishlist-btn.active svg {
+    animation: heartBeat 0.6s ease-out;
+}
+
+@keyframes heartBeat {
+    0% {
+        transform: scale(1);
+    }
+
+    25% {
+        transform: scale(1.3);
+    }
+
+    50% {
+        transform: scale(1);
+    }
+
+    75% {
+        transform: scale(1.3);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Product link styling */
+.product-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
 }

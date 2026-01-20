@@ -203,6 +203,9 @@ const AdminPage = () => {
                         <button className="btn btn-secondary" onClick={() => navigate('/admin/orders')} style={{ marginRight: '10px' }}>
                             Manage Orders
                         </button>
+                        <button className="btn btn-secondary" onClick={() => navigate('/admin/home-content')} style={{ marginRight: '10px' }}>
+                            Manage Home Content
+                        </button>
                         {(user && user.role === 'superAdmin') && (
                             <button className="btn btn-secondary" onClick={() => navigate('/admin/users')} style={{ marginRight: '10px' }}>
                                 Manage Users
