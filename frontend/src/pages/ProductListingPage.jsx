@@ -23,21 +23,37 @@ const ProductListingPage = () => {
 
     const [availableFilters, setAvailableFilters] = useState({ categories: [], brands: [] });
 
-    // Fetch available filters
+    // Fetch available filters - brands and categories from home-content (admin-managed)
+    // Default categories to show if none are configured
+    const defaultCategories = ['Men', 'Women', 'Kids', 'Accessories'];
+
     useEffect(() => {
         const fetchFilters = async () => {
             try {
-                const response = await fetch('http://localhost:5001/api/products/filters');
-                const data = await response.json();
-                setAvailableFilters(data);
+                // Fetch admin-created brands and categories from home-content
+                const homeContentResponse = await fetch('http://localhost:5001/api/home-content');
+                const homeContentData = await homeContentResponse.json();
+                const adminBrands = (homeContentData.brands || []).map(b => b.name);
+                const adminCategories = (homeContentData.categories || []).map(c => c.name);
+
+                // Use admin content if available, otherwise fall back to defaults
+                setAvailableFilters({
+                    categories: adminCategories.length > 0 ? adminCategories : defaultCategories,
+                    brands: adminBrands
+                });
             } catch (error) {
                 console.error("Error fetching filters:", error);
+                // Set defaults on error
+                setAvailableFilters({
+                    categories: defaultCategories,
+                    brands: []
+                });
             }
         };
         fetchFilters();
     }, []);
 
-    // Sync state when URL changes (e.g. clicking Navbar links)
+    // Sync state when URL changes (e.g. clicking Navbar links or HomePage cards)
     useEffect(() => {
         const cat = searchParams.get('category');
         if (cat !== null) setCategory(cat);
@@ -45,8 +61,11 @@ const ProductListingPage = () => {
         const kw = searchParams.get('keyword');
         if (kw !== null) setKeyword(kw);
 
-        // Reset page when category changes to avoid empty pages
-        if (cat !== category) setPage(1);
+        const br = searchParams.get('brand');
+        if (br !== null) setBrand(br);
+
+        // Reset page when filters change to avoid empty pages
+        setPage(1);
 
     }, [searchParams]);
 

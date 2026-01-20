@@ -255,8 +255,7 @@ const AdminHomeContentPage = () => {
                                             <option value="Men">Men</option>
                                             <option value="Women">Women</option>
                                             <option value="Kids">Kids</option>
-                                            <option value="Home & Living">Home & Living</option>
-                                            <option value="Beauty">Beauty</option>
+                                            <option value="Accessories">Accessories</option>
                                         </select>
                                     )}
                                 </div>

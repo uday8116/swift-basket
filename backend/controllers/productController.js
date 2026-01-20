@@ -20,7 +20,9 @@ const getProducts = async (req, res) => {
         : {};
 
     const category = req.query.category ? { category: req.query.category } : {};
-    const brand = req.query.brand ? { brand: req.query.brand } : {};
+    const brand = req.query.brand
+        ? { brand: { $regex: req.query.brand.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), $options: 'i' } }
+        : {};
 
     // Price Filter
     const priceFilter = {};
@@ -107,16 +109,30 @@ const deleteProduct = async (req, res) => {
 // @route   POST /api/products
 // @access  Private/Admin
 const createProduct = async (req, res) => {
+    const {
+        name,
+        price,
+        description,
+        image,
+        images,
+        brand,
+        category,
+        countInStock,
+        originalPrice,
+    } = req.body;
+
     const product = new Product({
-        name: 'Sample name',
-        price: 0,
+        name: name || 'Sample name',
+        price: price || 0,
         user: req.user._id,
-        image: '/images/sample.jpg',
-        brand: 'Sample brand',
-        category: 'Sample category',
-        countInStock: 0,
+        image: image || '/images/sample.jpg',
+        images: images || [],
+        brand: brand || 'Sample brand',
+        category: category || 'Sample category',
+        countInStock: countInStock || 0,
         numReviews: 0,
-        description: 'Sample description',
+        description: description || 'Sample description',
+        originalPrice: originalPrice || price || 0,
     });
 
     const createdProduct = await product.save();
@@ -133,6 +149,7 @@ const updateProduct = async (req, res) => {
         price,
         description,
         image,
+        images,
         brand,
         category,
         countInStock,
@@ -150,6 +167,7 @@ const updateProduct = async (req, res) => {
         product.price = price;
         product.description = description;
         product.image = image;
+        product.images = images || []; // Save multiple images
         product.brand = brand;
         product.category = category;
         product.countInStock = countInStock;

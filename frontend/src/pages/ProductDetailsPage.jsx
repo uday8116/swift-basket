@@ -21,7 +21,7 @@ const ProductDetailsPage = () => {
                     ...data,
                     // Mock additional data not in DB schema yet for UI completeness
                     discount: data.originalPrice ? Math.round(((data.originalPrice - data.price) / data.originalPrice) * 100) : 0,
-                    images: [data.image, data.image, data.image, data.image], // Mock gallery
+                    images: (data.images && data.images.length > 0) ? data.images : [data.image],
                     sizes: ['S', 'M', 'L', 'XL'] // Mock sizes
                 });
             } catch (error) {

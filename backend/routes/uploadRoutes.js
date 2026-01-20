@@ -17,4 +17,20 @@ router.post('/', protect, admin, upload.single('image'), (req, res) => {
     });
 });
 
+// @desc    Upload multiple images
+// @route   POST /api/upload/multiple
+// @access  Private/Admin
+router.post('/multiple', protect, admin, upload.array('images', 10), (req, res) => {
+    if (!req.files || req.files.length === 0) {
+        return res.status(400).json({ message: 'No files uploaded' });
+    }
+
+    const imagePaths = req.files.map(file => `/uploads/${file.filename}`);
+
+    res.json({
+        message: 'Images uploaded successfully',
+        imagePaths
+    });
+});
+
 module.exports = router;

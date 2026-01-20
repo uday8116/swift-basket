@@ -11,12 +11,14 @@ const AdminPage = () => {
     const [products, setProducts] = useState([]);
     const [showForm, setShowForm] = useState(false);
     const [editingProduct, setEditingProduct] = useState(null);
-    const [imageFile, setImageFile] = useState(null);
-    const [imagePreview, setImagePreview] = useState('');
+    const [imageFiles, setImageFiles] = useState([]);
+    const [imagePreviews, setImagePreviews] = useState([]);
     const [uploading, setUploading] = useState(false);
+    const [availableBrands, setAvailableBrands] = useState([]);
     const [formData, setFormData] = useState({
         name: '',
         image: '',
+        images: [],
         description: '',
         brand: '',
         category: '',
@@ -30,8 +32,19 @@ const AdminPage = () => {
             navigate('/');
         } else {
             fetchProducts();
+            fetchAvailableBrands();
         }
     }, [user, navigate]);
+
+    const fetchAvailableBrands = async () => {
+        try {
+            const response = await fetch('http://localhost:5001/api/home-content');
+            const data = await response.json();
+            setAvailableBrands(data.brands || []);
+        } catch (error) {
+            console.error('Error fetching brands:', error);
+        }
+    };
 
     const fetchProducts = async () => {
         try {
@@ -51,27 +64,35 @@ const AdminPage = () => {
     };
 
     const handleImageChange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            setImageFile(file);
-            // Create preview
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setImagePreview(reader.result);
-            };
-            reader.readAsDataURL(file);
+        const files = Array.from(e.target.files);
+        if (files.length > 0) {
+            setImageFiles(files);
+
+            const previews = [];
+            files.forEach(file => {
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    previews.push(reader.result);
+                    if (previews.length === files.length) {
+                        setImagePreviews(previews);
+                    }
+                };
+                reader.readAsDataURL(file);
+            });
         }
     };
 
-    const uploadImage = async () => {
-        if (!imageFile) return formData.image;
+    const uploadImages = async () => {
+        if (imageFiles.length === 0) return formData.images.length > 0 ? formData.images : (formData.image ? [formData.image] : []);
 
         const formDataUpload = new FormData();
-        formDataUpload.append('image', imageFile);
+        imageFiles.forEach(file => {
+            formDataUpload.append('images', file);
+        });
 
         setUploading(true);
         try {
-            const response = await fetch('http://localhost:5001/api/upload', {
+            const response = await fetch('http://localhost:5001/api/upload/multiple', {
                 method: 'POST',
                 headers: {
                     Authorization: `Bearer ${user.token}`,
@@ -81,14 +102,14 @@ const AdminPage = () => {
 
             const data = await response.json();
             if (response.ok) {
-                return `http://localhost:5001${data.imagePath}`;
+                return data.imagePaths.map(path => `http://localhost:5001${path}`);
             } else {
-                toast.error('Error uploading image');
+                toast.error('Error uploading images');
                 return null;
             }
         } catch (error) {
-            console.error('Error uploading image:', error);
-            toast.error('Error uploading image');
+            console.error('Error uploading images:', error);
+            toast.error('Error uploading images');
             return null;
         } finally {
             setUploading(false);
@@ -98,15 +119,16 @@ const AdminPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Upload image first if a new one was selected
-        const imageUrl = await uploadImage();
-        if (imageFile && !imageUrl) {
+        // Upload images first if new ones were selected
+        const uploadedImageUrls = await uploadImages();
+        if (imageFiles.length > 0 && !uploadedImageUrls) {
             return; // Upload failed
         }
 
         const productData = {
             ...formData,
-            image: imageUrl || formData.image,
+            images: uploadedImageUrls || formData.images,
+            image: (uploadedImageUrls && uploadedImageUrls[0]) || formData.image,
         };
 
         const url = editingProduct
@@ -128,11 +150,12 @@ const AdminPage = () => {
                 toast.success(editingProduct ? 'Product updated!' : 'Product created!');
                 setShowForm(false);
                 setEditingProduct(null);
-                setImageFile(null);
-                setImagePreview('');
+                setImageFiles([]);
+                setImagePreviews([]);
                 setFormData({
                     name: '',
                     image: '',
+                    images: [],
                     description: '',
                     brand: '',
                     category: '',
@@ -155,6 +178,7 @@ const AdminPage = () => {
         setFormData({
             name: product.name,
             image: product.image,
+            images: product.images || [product.image],
             description: product.description,
             brand: product.brand,
             category: product.category,
@@ -162,8 +186,8 @@ const AdminPage = () => {
             originalPrice: product.originalPrice,
             countInStock: product.countInStock,
         });
-        setImagePreview(product.image);
-        setImageFile(null);
+        setImagePreviews(product.images || [product.image]);
+        setImageFiles([]);
         setShowForm(true);
     };
 
@@ -216,11 +240,13 @@ const AdminPage = () => {
                             onClick={() => {
                                 setShowForm(!showForm);
                                 setEditingProduct(null);
-                                setImageFile(null);
-                                setImagePreview('');
+                                setEditingProduct(null);
+                                setImageFiles([]);
+                                setImagePreviews([]);
                                 setFormData({
                                     name: '',
                                     image: '',
+                                    images: [],
                                     description: '',
                                     brand: '',
                                     category: '',
@@ -252,13 +278,17 @@ const AdminPage = () => {
                                 </div>
                                 <div className="form-group">
                                     <label>Brand</label>
-                                    <input
-                                        type="text"
+                                    <select
                                         name="brand"
                                         value={formData.brand}
                                         onChange={handleInputChange}
                                         required
-                                    />
+                                    >
+                                        <option value="">Select Brand</option>
+                                        {availableBrands.map((b) => (
+                                            <option key={b._id} value={b.name}>{b.name}</option>
+                                        ))}
+                                    </select>
                                 </div>
                             </div>
                             <div className="form-row">
@@ -278,16 +308,25 @@ const AdminPage = () => {
                                     </select>
                                 </div>
                                 <div className="form-group">
-                                    <label>Product Image</label>
+                                    <label>Product Images</label>
                                     <input
                                         type="file"
                                         accept="image/*"
                                         onChange={handleImageChange}
                                         className="file-input"
+                                        multiple
                                     />
-                                    {imagePreview && (
-                                        <img src={imagePreview} alt="Preview" className="image-preview" />
-                                    )}
+                                    <div className="image-previews-container" style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', marginTop: '10px' }}>
+                                        {imagePreviews.map((src, index) => (
+                                            <img
+                                                key={index}
+                                                src={src}
+                                                alt={`Preview ${index}`}
+                                                className="image-preview"
+                                                style={{ width: '100px', height: '100px', objectFit: 'cover', borderRadius: '5px' }}
+                                            />
+                                        ))}
+                                    </div>
                                 </div>
                             </div>
                             <div className="form-group">

@@ -22,8 +22,7 @@ const Navbar = () => {
                     <Link to="/products?category=Men">MEN</Link>
                     <Link to="/products?category=Women">WOMEN</Link>
                     <Link to="/products?category=Kids">KIDS</Link>
-                    <Link to="/products?category=Home">HOME & LIVING</Link>
-                    <Link to="/products?category=Beauty">BEAUTY</Link>
+                    <Link to="/products?category=Accessories">ACCESSORIES</Link>
                     {user && user.isAdmin && <Link to="/admin" style={{ color: '#ff3f6c' }}>ADMIN</Link>}
                 </nav>
 

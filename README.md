@@ -12,11 +12,18 @@ A full-stack Multi-Vendor E-commerce platform built with the **MERN Stack** (Mon
 *   **Authentication**: Secure JWT-based auth with HTTP-only cookies (if configured) or Bearer tokens.
 
 ### E-Commerce Core
-*   **Product Management**: Create, Read, Update, Delete (CRUD) products with images, categories, and brands.
+*   **Product Management**: Create, Read, Update, Delete (CRUD) products with **multiple image uploads** and image gallery.
+*   **Dynamic Filters**: Categories and brands in product listing are dynamically managed by admin.
 *   **Shopping Cart**: Dynamic cart with stock checks and real-time total calculation.
 *   **Checkout Flow**: Shipping Address -> Payment Method -> Order Review -> Place Order.
 *   **Order Tracking**: Users can track order status (Processing, Shipped, Delivered).
 *   **Inventory**: Stock automatically decrements upon successful order placement.
+
+### Admin Dashboard
+*   **Home Content Management**: Admin can manage homepage brands and categories with images and discounts.
+*   **Dynamic Brand Selection**: Brands created in home content appear in product creation dropdown.
+*   **Product Image Gallery**: Upload multiple images per product with preview.
+*   **User Management**: Super Admin can manage all users and their roles.
 
 ### Technical Highlights
 *   **Testing**: 
